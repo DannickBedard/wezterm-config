@@ -1,29 +1,29 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
-local keys = {}
-local function mergeKeyMapToKeyMap(keymaps)
-  for k,v in pairs(keymaps) do keys[k] = v end
+local keyMappings = {} -- keyMappings bindings table
+
+local function mergeKeyMapToKeyMap(keymaps) -- Merge keymaps to the keyMappings bindings table
+  for key,value in pairs(keymaps) do keyMappings[key] = value end
 end
 
-config.default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' }
+local function mergeConfig(partialConfig)
+  for key,value in pairs(partialConfig) do config[key] = value end
+end
 
-config.font = wezterm.font '0xProto Nerd Font'
-config.color_scheme = 'OneHalfDark'
-config.window_close_confirmation = 'NeverPrompt'
+local myConfig = dofile(wezterm.config_dir .. "/wezterm-config/wezterm-config.lua")
+local workspace = dofile(wezterm.config_dir .. "/wezterm-config/workspace.lua")
 
 local act = wezterm.action
 
-local workspace = dofile(wezterm.config_dir .. "/wezterm-config/workspace.lua")
+mergeConfig(myConfig)
 
 mergeKeyMapToKeyMap(
   workspace.keys
 )
 
-
+-- Default keymaps
 mergeKeyMapToKeyMap(
   {
     {
@@ -53,9 +53,5 @@ mergeKeyMapToKeyMap(
   }
 )
 
--- timeout_milliseconds defaults to 1000 and can be omitted
-config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
-
-config.keys = keys
+config.keys = keyMappings
 return config
-
