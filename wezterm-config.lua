@@ -8,6 +8,7 @@ return {
   window_close_confirmation = 'NeverPrompt',
 
   -- timeout_milliseconds defaults to 1000 and can be omitted
-  leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
+  leader = { key = 'A', mods = 'CTRL', timeout_milliseconds = 1000 },
+  audible_bell = "Disabled"
 
 }
