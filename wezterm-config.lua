@@ -1,7 +1,8 @@
 local wezterm = require 'wezterm'
 
 return {
-  default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' },
+  -- default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' },
+  default_prog = { 'C:\\Program Files\\Git\\bin\\bash.exe' },
 
   font = wezterm.font '0xProto Nerd Font',
   color_scheme = 'OneHalfDark',

@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local mux = wezterm.mux;
 
 local config = wezterm.config_builder()
 
@@ -27,6 +28,7 @@ local configs = {
 
 local windowNvimPath = "C:\\Users\\Dannick.bedard\\AppData\\Local\\nvim"
 local windowWeztermPath = "C:\\Users\\Dannick.bedard\\wezterm-config"
+local windowNotesPath = "C:\\Users\\Dannick.bedard\\Documents\\Notes"
 
 local settings = {
   currentConfig = configs.work, -- À changer selon l'ordinateur utilisé
@@ -39,6 +41,10 @@ local settings = {
       project2 = {
         path = "/viridem/api",
         projectName = "Viridem-api",
+      },
+      project6 = {
+        path = windowNotesPath,
+        projectName = "Notes obsidian"
       },
       project7 = {
         path = windowWeztermPath,
@@ -74,17 +80,64 @@ local settings = {
   }
 }
 
+-- Function to check if a session exists
+local function sessionExists(name)
+
+  local workspace = mux.get_active_workspace()
+ wezterm.log_warn(workspace);
+ wezterm.log_warn(mux.get_workspace_names())
+  local workspaceNames = mux.get_workspace_names()
+
+  for index in ipairs(mux.get_workspace_names()) do
+    wezterm.log_warn(workspaceNames[index]);
+    if workspaceNames[index] == name then
+      wezterm.log_warn("return true");
+      return true
+    end
+  end
+  wezterm.log_warn("return false");
+  return false
+end
+
 local lunchWorkSpace = function(window,pane,sessionName, path)
-  window:perform_action(
-    act.SwitchToWorkspace {
-      name = sessionName,
-      spawn = {
-        cwd = path,
-        args = { 'nvim', '.' },
+  if sessionExists(sessionName) then
+
+    wezterm.log_warn("Ol session");
+    window:perform_action(
+      act.SwitchToWorkspace {
+        name = sessionName,
+        spawn = {
+          cwd = path,
+          args = { 'nvim', '.' },
+        },
       },
-    },
-    pane
-  )
+      pane
+    )
+  else
+
+    wezterm.log_warn("New session");
+    window:perform_action(
+      act.Multiple {
+
+        act.SwitchToWorkspace {
+          name = sessionName,
+          spawn = {
+            cwd = path,
+            args = { 'nvim', '.' },
+          },
+        },
+      },
+      pane
+    )
+    window:perform_action(
+      act.Multiple {
+
+        act.SpawnTab 'CurrentPaneDomain', -- Open new tabs
+        act.ActivatePaneByIndex(0), -- Focus on the first tab
+      },
+      pane
+    )
+  end
   -- Check to open another tab if not on first workspace creation
   -- TODO :: Check if workspace exist
   -- if false : create workspace + add tab and split
