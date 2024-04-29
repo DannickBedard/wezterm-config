@@ -20,4 +20,4 @@ return config
 ```
 
 # Configs
-You can edit your config for wordspace inside the workspace file and change the currentConfig
+You can edit your config for workspace inside the init.lua file and change the currentConfig
