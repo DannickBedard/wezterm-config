@@ -100,8 +100,6 @@ local function sessionExists(name)
 end
 
 local lunchWorkSpace = function(window,pane,sessionName, path)
-  if sessionExists(sessionName) then
-
     wezterm.log_warn("Ol session");
     window:perform_action(
       act.SwitchToWorkspace {
@@ -113,31 +111,6 @@ local lunchWorkSpace = function(window,pane,sessionName, path)
       },
       pane
     )
-  else
-
-    wezterm.log_warn("New session");
-    window:perform_action(
-      act.Multiple {
-
-        act.SwitchToWorkspace {
-          name = sessionName,
-          spawn = {
-            cwd = path,
-            args = { 'nvim', '.' },
-          },
-        },
-      },
-      pane
-    )
-    window:perform_action(
-      act.Multiple {
-
-        act.SpawnTab 'CurrentPaneDomain', -- Open new tabs
-        act.ActivatePaneByIndex(0), -- Focus on the first tab
-      },
-      pane
-    )
-  end
   -- Check to open another tab if not on first workspace creation
   -- TODO :: Check if workspace exist
   -- if false : create workspace + add tab and split
