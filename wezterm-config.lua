@@ -1,10 +1,5 @@
 local wezterm = require 'wezterm'
 
--- The filled in variant of the < symbol
-local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
-
--- The filled in variant of the > symbol
-local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
 local minimize = wezterm.nerdfonts.fae_minimize
 local maximize = wezterm.nerdfonts.fae_restore
 local close = wezterm.nerdfonts.fae_thin_close

@@ -168,104 +168,104 @@ end)
 
 
 config.keys = {
-
-    {
-      key = '9',
-      mods = 'ALT',
-      action = act.ShowLauncherArgs {
-        flags = 'FUZZY|WORKSPACES',
+  { key = 'q', mods = 'CTRL|SHIFT', action = wezterm.action.QuitApplication },
+  {
+    key = '9',
+    mods = 'ALT',
+    action = act.ShowLauncherArgs {
+      flags = 'FUZZY|WORKSPACES',
+    },
+  },
+  {
+    key = '0',
+    mods = 'ALT',
+    action = act.SwitchToWorkspace {
+      name = 'default',
+    },
+  },
+  {
+    key = 's',
+    mods = 'ALT',
+    action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
+  },
+  {
+    key = 'S',
+    mods = 'ALT',
+    action = act.SplitVertical {domain = "CurrentPaneDomain"}
+  },
+  {
+    key = '1',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace1'
+  },
+  {
+    key = '2',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace2'
+  },
+  {
+    key = '3',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace3'
+  },
+  {
+    key = '4',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace4'
+  },
+  {
+    key = '5',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace5'
+  },
+  {
+    key = '6',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace6'
+  },
+  {
+    key = '7',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace7'
+  },
+  {
+    key = '8',
+    mods = 'ALT',
+    action = act.EmitEvent 'lunchWorkSpace8'
+  },
+  {
+    key = 'W',
+    mods = 'CTRL|SHIFT',
+    action = act.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Enter name for new workspace' },
       },
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:perform_action(
+            act.SwitchToWorkspace {
+              name = line,
+            },
+            pane
+          )
+        end
+      end),
     },
-    {
-      key = '0',
-      mods = 'ALT',
-      action = act.SwitchToWorkspace {
-        name = 'default',
-      },
-    },
-    {
-      key = 's',
-      mods = 'ALT',
-      action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
-    },
-    {
-      key = 'S',
-      mods = 'ALT',
-      action = act.SplitVertical {domain = "CurrentPaneDomain"}
-    },
-    {
-      key = '1',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace1'
-    },
-    {
-      key = '2',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace2'
-    },
-    {
-      key = '3',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace3'
-    },
-    {
-      key = '4',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace4'
-    },
-    {
-      key = '5',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace5'
-    },
-    {
-      key = '6',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace6'
-    },
-    {
-      key = '7',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace7'
-    },
-    {
-      key = '8',
-      mods = 'ALT',
-      action = act.EmitEvent 'lunchWorkSpace8'
-    },
-    {
-      key = 'W',
-      mods = 'CTRL|SHIFT',
-      action = act.PromptInputLine {
-        description = wezterm.format {
-          { Attribute = { Intensity = 'Bold' } },
-          { Foreground = { AnsiColor = 'Fuchsia' } },
-          { Text = 'Enter name for new workspace' },
-        },
-        action = wezterm.action_callback(function(window, pane, line)
-          -- line will be `nil` if they hit escape without entering anything
-          -- An empty string if they just hit enter
-          -- Or the actual line of text they wrote
-          if line then
-            window:perform_action(
-              act.SwitchToWorkspace {
-                name = line,
-              },
-              pane
-            )
-          end
-        end),
-      },
-    },
+  },
   {
     key = 'R',
     mods = 'CTRL|SHIFT',
     action = act.PromptInputLine {
-        description = wezterm.format {
-          { Attribute = { Intensity = 'Bold' } },
-          { Foreground = { AnsiColor = 'Fuchsia' } },
-          { Text = 'Change tab name' },
-        },
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Change tab name' },
+      },
       action = wezterm.action_callback(function(window, pane, line)
         -- line will be `nil` if they hit escape without entering anything
         -- An empty string if they just hit enter
