@@ -100,21 +100,15 @@ local function sessionExists(name)
 end
 
 local lunchWorkSpace = function(window,pane,sessionName, path)
-    wezterm.log_warn("Ol session");
     window:perform_action(
       act.SwitchToWorkspace {
         name = sessionName,
         spawn = {
           cwd = path,
-          args = { 'nvim', '.' },
         },
       },
       pane
     )
-  -- Check to open another tab if not on first workspace creation
-  -- TODO :: Check if workspace exist
-  -- if false : create workspace + add tab and split
-  -- if true : juste switch to workspace 
 end
 
 local getWorkspaceProject = function ()
@@ -171,16 +165,7 @@ end)
 wezterm.on('lunchWorkSpace8', function(window, pane)
   lunchWorkSpaceByProject(window,pane, "project8");
 end)
-mergeKeyMapToKeyMap(
-  {
-  }
-)
 
--- Default keymaps
-mergeKeyMapToKeyMap(
-  {
-  }
-)
 
 config.keys = {
 
@@ -208,12 +193,6 @@ config.keys = {
       mods = 'ALT',
       action = act.SplitVertical {domain = "CurrentPaneDomain"}
     },
-
-    -- Switch to the default workspace
-    -- Create a new workspace with a random name and switch to it
-    { key = 'i', mods = 'CTRL|SHIFT', action = act.SwitchToWorkspace },
-    -- Show the launcher in fuzzy selection mode and have it list all workspaces
-    -- and allow activating one.
     {
       key = '1',
       mods = 'ALT',
@@ -278,5 +257,24 @@ config.keys = {
         end),
       },
     },
+  {
+    key = 'R',
+    mods = 'CTRL|SHIFT',
+    action = act.PromptInputLine {
+        description = wezterm.format {
+          { Attribute = { Intensity = 'Bold' } },
+          { Foreground = { AnsiColor = 'Fuchsia' } },
+          { Text = 'Change tab name' },
+        },
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
 }
 return config
