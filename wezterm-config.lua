@@ -5,6 +5,9 @@ local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
 
 -- The filled in variant of the > symbol
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
+local minimize = wezterm.nerdfonts.fae_minimize
+local maximize = wezterm.nerdfonts.fae_restore
+local close = wezterm.nerdfonts.fae_thin_close
 
 
 
@@ -25,13 +28,13 @@ return {
   },
   window_decorations = "INTEGRATED_BUTTONS|RESIZE",
   tab_bar_style = {
-    window_hide = " minimize ",
-    window_maximize = " maximize ",
-    window_close = " close ",
+    window_hide = " " ..minimize .. " ",
+    window_maximize = " " ..maximize ..  " ",
+    window_close = " " ..close .. " ",
 
-    window_close_hover = " CLOSE ",
-    window_hide_hover = " MINIMIZE ",
-    window_maximize_hover = " MAXIMIZE ",
+    window_close_hover = " " .. close .. " ",
+    window_hide_hover = " " ..minimize .. " ",
+    window_maximize_hover = " " ..maximize .. " ",
   },
 
 
