@@ -9,8 +9,10 @@ local close = wezterm.nerdfonts.fae_thin_close
 return {
   -- default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' },
   default_prog = { 'C:\\Program Files\\Git\\bin\\bash.exe' },
-
-  font = wezterm.font '0xProto Nerd Font',
+  -- enable_wayland = true,
+  -- prefer_egl = true,
+  -- front_end = "WebGpu", -- Use software rendering as a fallback
+  font = wezterm.font('CommitMono Nerd Font', { weight = 'Medium' }),
   color_scheme = 'OneHalfDark',
   window_close_confirmation = 'NeverPrompt',
   use_fancy_tab_bar = false,

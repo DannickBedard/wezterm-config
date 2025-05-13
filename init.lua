@@ -170,67 +170,66 @@ end)
 config.keys = {
   { key = 'q', mods = 'CTRL|SHIFT', action = wezterm.action.QuitApplication },
   {
-    key = '9',
-    mods = 'ALT',
+    key = 'F9',
     action = act.ShowLauncherArgs {
       flags = 'FUZZY|WORKSPACES',
     },
   },
   {
-    key = '0',
-    mods = 'ALT',
+    key = 'F10',
+    --mods = 'ALT',
     action = act.SwitchToWorkspace {
       name = 'default',
     },
   },
-  {
+  { -- TODO :: fix conflict with window manager
     key = 's',
     mods = 'ALT',
     action = act.SplitHorizontal {domain = "CurrentPaneDomain"}
   },
-  {
+  { -- TODO :: fix conflict with window manager
     key = 'S',
     mods = 'ALT',
     action = act.SplitVertical {domain = "CurrentPaneDomain"}
   },
   {
-    key = '1',
-    mods = 'ALT',
+    key = 'F1',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace1'
   },
   {
-    key = '2',
-    mods = 'ALT',
+    key = 'F2',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace2'
   },
   {
-    key = '3',
-    mods = 'ALT',
+    key = 'F3',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace3'
   },
   {
-    key = '4',
-    mods = 'ALT',
+    key = 'F4',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace4'
   },
   {
-    key = '5',
-    mods = 'ALT',
+    key = 'F5',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace5'
   },
   {
-    key = '6',
-    mods = 'ALT',
+    key = 'F6',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace6'
   },
   {
-    key = '7',
-    mods = 'ALT',
+    key = 'F7',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace7'
   },
   {
-    key = '8',
-    mods = 'ALT',
+    key = 'F8',
+    --mods = 'ALT',
     action = act.EmitEvent 'lunchWorkSpace8'
   },
   {
@@ -277,4 +276,22 @@ config.keys = {
     },
   },
 }
+
+
+for i = 1, 3 do
+  -- CTRL+SHIFT + number to move to that position
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.MoveTab(i - 1),
+  })
+
+  -- CTRL+ALT + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL',
+    action = act.ActivateTab(i - 1),
+  })
+end
+
 return config
